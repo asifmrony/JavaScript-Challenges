@@ -27,3 +27,16 @@ if (john.calcBMI() > mark.calcBMI()) {
 } else {
     console.log('They have Same BMI');
 }
+
+
+/**
+ * Challenge 'looping Backward' : print an arry in the reverse way
+ */
+
+var values = ['John', 'Smith', 1980, 'designer', false, 'blue'];
+
+console.log(values.length);
+
+for (var i = values.length - 1; i >= 0; i--) {
+    console.log(values[i]);
+}
