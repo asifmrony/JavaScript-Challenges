@@ -21,63 +21,63 @@
     (Hint: we learned a special technique to do exactly that).
 */
 
-
-function Question(question, answers, correctAnswer) {
-    this.Question = question;
-    this.answers = answers;
-    this.correctAnswer = correctAnswer;
-}
-
-Question.prototype.displayQuestion = function () {
-    console.log(this.Question);
-    for (var i = 0; i < this.answers.length; i++) {
-        console.log(i + ':' + this.answers[i]);
+(function () {
+    function Question(question, answers, correctAnswer) {
+        this.Question = question;
+        this.answers = answers;
+        this.correctAnswer = correctAnswer;
     }
-}
 
-Question.prototype.checkAnswer = function (ans) {
-    if (ans === this.correctAnswer) {
-        console.log("Correct Answer");
-    } else {
-        console.log("Sorry! wrong Answer :)");
+    Question.prototype.displayQuestion = function () {
+        console.log(this.Question);
+        for (var i = 0; i < this.answers.length; i++) {
+            console.log(i + ':' + this.answers[i]);
+        }
     }
-}
+
+    Question.prototype.checkAnswer = function (ans) {
+        if (ans === this.correctAnswer) {
+            console.log("Correct Answer!");
+        }
+        // else if (ans.toSring() == "exit") {
+        //     console.log("You choose to quit the quiz game!");
+        // } 
+        else {
+            console.log("Sorry! wrong Answer :)");
+        }
+    }
 
 
-var quesSetOne = new Question('Who is your favourite teacher?', ['john', 'mark', 'jonas'], 2);
-var quesSetTwo = new Question('Is Programming Fun?', ['Yes', 'No'], 0);
-var quesSetThree = new Question('What is the best way of learning Programming',
-    ['By writting code', 'By doing Challenge', 'By Making Project'],
-    2);
+    var quesSetOne = new Question('Who is your favourite teacher?', ['john', 'mark', 'jonas'], 2);
+    var quesSetTwo = new Question('Is Programming Fun?', ['Yes', 'No'], 0);
+    var quesSetThree = new Question('What is the best way of learning Programming',
+        ['By writting code', 'By doing Challenge', 'By Making Project'],
+        2);
 
-var quesArrray = [quesSetOne, quesSetTwo, quesSetThree];
+    var quesArrray = [quesSetOne, quesSetTwo, quesSetThree];
 
-var randomNumber = Math.floor(Math.random() * quesArrray.length);
+    function nextQuiz() {
 
-var randomQuestion = quesArrray[randomNumber];
+        var randomNumber = Math.floor(Math.random() * quesArrray.length);
 
-//first question
-randomQuestion.displayQuestion();
+        var randomQuestion = quesArrray[randomNumber];
 
-answer = parseInt(prompt('Select the correct answer'));
-// console.log(answer);
-randomQuestion.checkAnswer(answer);
+        //first question
+        randomQuestion.displayQuestion();
 
-//second question
-randomQuestion.displayQuestion();
+        var answer = prompt('Select the correct answer');
+        // console.log(answer);
 
-answer = parseInt(prompt('Select the correct answer'));
-// console.log(answer);
-randomQuestion.checkAnswer(answer);
+        if (answer !== "exit") {
+            randomQuestion.checkAnswer(parseInt(answer));
+            nextQuiz();
+        }
 
-//third question
-randomQuestion.displayQuestion();
+    }
 
-answer = parseInt(prompt('Select the correct answer'));
-// console.log(answer);
-randomQuestion.checkAnswer(answer);
+    nextQuiz();
 
-
+})();
 
 
 
