@@ -42,10 +42,10 @@ paragraph.innerHTML = paragraph.innerHTML.split(".").join("</p><p>");
 */
 
 console.log(paragraph);
-var words = paragraph.innerText.split(" ")
+var words = paragraph.innerText.split(" ").length;
 
-var newParagraph = document.createElement('h3');
-newParagraph.innerText = "Total Words Count in the paragraph: " + words.length;
+var newParagraph = document.createElement('h3');  
+newParagraph.innerText = `Total Words Count in the paragraph is ${words}`;
 
 document.body.insertBefore(newParagraph, paragraph);
 /*
@@ -53,3 +53,8 @@ document.body.insertBefore(newParagraph, paragraph);
   -----------
   Replace all question marks (?) with thinking faces (🤔) and exclamation marks (!) with astonished faces (😲) 
 */
+
+Array.from(document.querySelectorAll('p'))
+    .forEach(p => {
+    p.innerHTML = p.innerHTML.replace(/\?/g, ' 🤔').replace(/\!/g, ' 😲');
+})
