@@ -5,6 +5,7 @@ button.addEventListener('click', function(){
     var input = document.querySelector("input").value;
     console.log(input);
     pushToDOM(input);
+
 });
 
 document.querySelector(".js-userinput").addEventListener('keyup', function(e){
@@ -16,6 +17,7 @@ document.querySelector(".js-userinput").addEventListener('keyup', function(e){
        }
     
 });
+
 
 /*Do the Data stuff with API*/
 var url = "http://api.giphy.com/v1/gifs/search?q=funny+cat&api_key=dc6zaTOxFJmzC";
@@ -36,11 +38,18 @@ giphyRequest.send();
 
 /* Show me the GIFs */
 function pushToDOM(input){
+    //convert data to object
     var dataResponse = JSON.parse(input);
-    var imageURL = dataResponse.data[4].images.fixed_height.url;
-    console.log(imageURL);
+    var imageURLs = dataResponse.data;
     
-    var jsContainer = document.querySelector(".js-container");
-    jsContainer.innerHTML = "<img src=\"" + imageURL + "\">";
+    imageURLs.forEach(function(images){
+        var allImageUrls = images.images.fixed_height.url;
+        console.log(allImageUrls);
+        var jsContainer = document.querySelector(".js-container");
+        jsContainer.innerHTML += "<img src=\"" + allImageUrls + "\">";
+    })
 }
+
+
+
 
