@@ -1,9 +1,7 @@
 /*grab the input value*/
 
-var button = document.querySelector(".js-go");
-button.addEventListener('click', function(){
+document.querySelector(".js-go").addEventListener('click', function(){
     var input = document.querySelector("input").value;
-    console.log(input);
     pushToDOM(input);
 
 });
@@ -14,18 +12,30 @@ document.querySelector(".js-userinput").addEventListener('keyup', function(e){
     /*if key ENTER is pressed*/
     if(e.which === 13){
        pushToDOM(input);
-       }
+    }
     
 });
 
 
 /*Do the Data stuff with API*/
-var url = "http://api.giphy.com/v1/gifs/search?q=funny+cat&api_key=dc6zaTOxFJmzC";
+var url = "https://api.giphy.com/v1/gifs/trending?api_key=97Pn755rTJVRuUroLRrL8YyqnuAxlV3L&limit=25&rating=g";
 
 //ajax request
 function reqListener () {
     var response = this.response;
-    pushToDOM(response);
+
+    /* Show me the GIFs */
+    
+    //convert data to object
+    var dataResponse = JSON.parse(response);
+    var imageURLs = dataResponse.data;
+    
+    imageURLs.forEach(function(images){
+        var allImageUrls = images.images.fixed_height.url;
+//        console.log(allImageUrls);
+        var jsContainer = document.querySelector(".js-container");
+        jsContainer.innerHTML += "<img src=\"" + allImageUrls + "\" class=\"container-image\">";
+    })
 }
 
 var giphyRequest = new XMLHttpRequest();
@@ -35,21 +45,27 @@ giphyRequest.send();
 
 
 
-
-/* Show me the GIFs */
+/*Filter GIFs based on search query*/
 function pushToDOM(input){
-    //convert data to object
-    var dataResponse = JSON.parse(input);
-    var imageURLs = dataResponse.data;
+    var jsContainer = document.querySelector(".js-container");
+    jsContainer.innerHTML = null;
+    var apiSearchUrl = "https://api.giphy.com/v1/gifs/search?api_key=97Pn755rTJVRuUroLRrL8YyqnuAxlV3L&q="+ input +"&limit=25&offset=0&rating=g&lang=en";
     
-    imageURLs.forEach(function(images){
-        var allImageUrls = images.images.fixed_height.url;
-        console.log(allImageUrls);
-        var jsContainer = document.querySelector(".js-container");
-        jsContainer.innerHTML += "<img src=\"" + allImageUrls + "\">";
-    })
+    function showContent(){
+        var response = this.response;
+        var urls = JSON.parse(response);
+        var data = urls.data;
+        data.forEach(function(image){
+            var allImages = image.images.fixed_height.url;
+            console.log(allImages);
+            jsContainer.innerHTML += "<img src=\""+ allImages +"\" class=\"container-image\">";
+        })
+        
+    }
+    
+    var searchRequest = new XMLHttpRequest();
+    searchRequest.addEventListener("load", showContent);
+    searchRequest.open("GET", apiSearchUrl);
+    searchRequest.send();
 }
-
-
-
 
