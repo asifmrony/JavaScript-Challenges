@@ -99,5 +99,10 @@ SoundCloudAPI.getEmbed = function(trackURL){
         box.innerHTML = embed.html;
         
         sidebar.insertBefore(box, sidebar.firstChild);
+        localStorage.setItem("key", sidebar.innerHTML);
+
     });  
-}          
+}
+
+var sidebar = document.querySelector('.js-playlist');
+sidebar.innerHTML = localStorage.getItem("key");
