@@ -1,8 +1,11 @@
 /* 1 Search */
 
-
-
-
+document.querySelector('.js-submit').addEventListener('click', function(){
+    console.log('working');
+   var searchQuery = document.querySelector('.js-search').value;
+    SoundCloudAPI.getTrack(searchQuery);
+    console.log(searchQuery);
+});
 
 
 
@@ -27,8 +30,6 @@ SoundCloudAPI.getTrack = function(inputValue) {
         SoundCloudAPI.renderTracks(tracks);
     });
 }
-
-SoundCloudAPI.getTrack('Kety Perry');
 
 
 /*Display Songs based on Search Query*/
