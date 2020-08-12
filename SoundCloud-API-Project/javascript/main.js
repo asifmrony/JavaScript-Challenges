@@ -1,15 +1,42 @@
-/* 1 Search */
-
-document.querySelector('.js-submit').addEventListener('click', function(){
-    console.log('working');
-   var searchQuery = document.querySelector('.js-search').value;
-    SoundCloudAPI.getTrack(searchQuery);
-    console.log(searchQuery);
+window.addEventListener('load', (event) => {
+    SoundCloudAPI.getTrack();
 });
 
+/* 1. Search */
 
+var UI = {};
 
-/* Do the magic with Soundcloud API*/
+UI.reset = function(){
+    var jsSearchResults = document.querySelector('.js-search-results');
+    jsSearchResults.innerHTML = null;
+}
+
+UI.submit = function() {
+    document.querySelector('.js-submit').addEventListener('click', function(){
+        console.log('working');
+        UI.reset();
+       var searchQuery = document.querySelector('.js-search').value;
+        SoundCloudAPI.getTrack(searchQuery);
+    });
+}
+
+UI.submit();
+
+UI.keyPress = function() {
+    document.querySelector(".js-search").addEventListener('keyup', function(e){
+        console.log("what is up?");
+        var searchQuery = this.value;       
+        
+        if(e.which === 13){
+            UI.reset();
+            SoundCloudAPI.getTrack(searchQuery);
+        }
+    });
+}
+
+UI.keyPress();
+
+/* 2. Do the magic with Soundcloud API*/
 
 var SoundCloudAPI = {};
 
@@ -32,7 +59,7 @@ SoundCloudAPI.getTrack = function(inputValue) {
 }
 
 
-/*Display Songs based on Search Query*/
+/* 3. Display Songs based on Search Query*/
 SoundCloudAPI.renderTracks = function(tracks) {
     
     tracks.forEach(function(track){
@@ -86,7 +113,7 @@ SoundCloudAPI.renderTracks = function(tracks) {
     
 }
     
-/*Add to playlist feature*/
+/* 4. Add to playlist feature*/
 SoundCloudAPI.getEmbed = function(trackURL){
     console.log("working Yeah");
     SC.oEmbed(trackURL, {
@@ -107,3 +134,14 @@ SoundCloudAPI.getEmbed = function(trackURL){
 
 var sidebar = document.querySelector('.js-playlist');
 sidebar.innerHTML = localStorage.getItem("key");
+
+
+/* 5. Render the trending music on browser load. currently on blank search trending music displays */
+
+
+
+
+
+
+
+/* 6. Close Button Implementation: Song removes from the playlist when close trigger */
