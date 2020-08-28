@@ -42,12 +42,39 @@ confirmPassword.addEventListener('blur', checkInput )
   Add a further validation to check if the user input in the password and confirm password inputs match.  Show an error message if they do not.
 */
 
+function checkPassword(e){
+    e.preventDefault();
+    var password = document.querySelector("#password");
+    
+    var confirmPassword = document.querySelector("#confirmPassword");
+    console.log(password.value, confirmPassword.value);
+    if(password.value !== confirmPassword.value){
+        console.log("password dont match");
+       
+    confirmPassword.insertAdjacentHTML('afterEnd', '<span style="color:red;">Password dont match!</span>');
+    }
+}
+
+document.querySelector(".register-btn").addEventListener("click", checkPassword);
+
 /*
   Exercise 04
   -----------
 Ensure the ‘Register’ button is disabled until the user has entered valid data into all the input fields.  Once they have, the registration button should then be enabled.
 */
 
+var registerBtn = document.querySelector(".register-btn");
+registerBtn.setAttribute('disabled', 'disabled');
+
+document.getElementById("registrationForm").addEventListener('change', function(){
+    var allInputs =Array.from(document.querySelectorAll("input")).every((input) => input.value);
+    console.log(allInputs);
+    if(allInputs){
+        registerBtn.removeAttribute('disabled');   
+    } else {
+        registerBtn.setAttribute('disabled', 'disabled');
+    }
+})
 
 /*
   Exercise 05
